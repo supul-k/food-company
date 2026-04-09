@@ -1,46 +1,34 @@
 'use client';
+import { ReactNode } from 'react';
 
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
+  onClick?: () => void;
+  className?: string;
   fullWidth?: boolean;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-export default function Button({ 
-  children, 
-  variant = 'primary', 
-  size = 'md', 
-  fullWidth = false,
+export default function Button({
+  children,
+  variant = 'primary',
+  onClick,
   className = '',
-  ...props 
+  fullWidth = false,
+  disabled = false,
+  type = 'button',
 }: ButtonProps) {
+  const base = 'px-6 py-2 rounded-lg font-semibold transition duration-200';
   const variants = {
-    primary: 'bg-amber-600 text-white hover:bg-amber-700',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700',
-    outline: 'border-2 border-amber-600 text-amber-600 hover:bg-amber-50',
+    primary: 'bg-brand-yellow text-white hover:bg-amber-600',
+    secondary: 'bg-brand-green text-white hover:bg-emerald-700',
+    outline: 'border-2 border-brand-yellow text-brand-yellow hover:bg-brand-yellow hover:text-white',
   };
-
-  const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
-  };
-
   return (
-    <button
-      className={`
-        ${variants[variant]} 
-        ${sizes[size]} 
-        ${fullWidth ? 'w-full' : ''} 
-        rounded-lg font-semibold transition duration-200
-        disabled:opacity-50 disabled:cursor-not-allowed
-        ${className}
-      `}
-      {...props}
-    >
+    <button 
+    className={`${base} ${variants[variant]} ${className} ${fullWidth ? 'w-full' : ''}`} onClick={onClick} disabled={disabled} type={type}>
       {children}
     </button>
   );

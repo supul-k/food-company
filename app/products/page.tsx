@@ -1,43 +1,133 @@
-import Header from '@/app/components/layout/Header';
-import Footer from '@/app/components/layout/Footer';
-import { PRODUCTS } from '@/app/lib/constants';
-import Card from '@/app/components/ui/Card';
-import Button from '@/app/components/ui/Button';
-
-export const metadata = {
-  title: 'Our Products | Italian Delights',
-  description: 'Explore our range of authentic Italian products',
-};
+'use client';
+import { useState, useMemo } from 'react';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
+import CategorySidebar from '../components/products/CategorySidebar';
+import ProductGrid from '../components/products/ProductGrid';
+import ProductSort from '../components/products/ProductSort';
+import Pagination from '../components/products/Pagination';
+import Select from '../components/ui/Select';
+import { products, categories } from '../lib/productsData';
 
 export default function ProductsPage() {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [sortBy, setSortBy] = useState('default');
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Filter products by category
+  const filteredProducts = useMemo(() => {
+    let filtered = products;
+    if (selectedCategory) {
+      filtered = products.filter(p => p.category === selectedCategory);
+    }
+    return filtered;
+  }, [selectedCategory]);
+
+  // Sort products
+  const sortedProducts = useMemo(() => {
+    const sorted = [...filteredProducts];
+    switch (sortBy) {
+      case 'popularity':
+        return sorted.sort((a, b) => b.popularity - a.popularity);
+      case 'price-low':
+        return sorted.sort((a, b) => a.price - b.price);
+      case 'price-high':
+        return sorted.sort((a, b) => b.price - a.price);
+      case 'name-asc':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-desc':
+        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return sorted;
+    }
+  }, [filteredProducts, sortBy]);
+
+  // Paginate products
+  const totalProducts = sortedProducts.length;
+  const totalPages = Math.ceil(totalProducts / itemsPerPage);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return sortedProducts.slice(start, end);
+  }, [sortedProducts, currentPage, itemsPerPage]);
+
+  // Reset page when filters change
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    setCurrentPage(1);
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(Number(value));
+    setCurrentPage(1);
+  };
+
   return (
     <>
       <Header />
-      <main className="min-h-screen py-16">
+      <main className="min-h-screen py-8 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold text-center mb-4">All Products</h1>
-          <p className="text-gray-600 text-center mb-12">
-            Browse our complete collection
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PRODUCTS.map((product) => (
-              <Card key={product.id}>
-                <div className="h-48 bg-gray-100 flex items-center justify-center text-6xl">
-                  🍕
+          {/* Breadcrumb */}
+          <div className="text-sm text-gray-500 mb-6">
+            <span className="text-gray-700">Home</span> &gt; <span className="text-brand-yellow">Our Product Line</span>
+          </div>
+
+          <div className="grid lg:grid-cols-4 gap-8">
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              <CategorySidebar
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={handleCategoryChange}
+              />
+            </div>
+
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {/* Controls Bar */}
+              <div className="bg-white rounded-lg shadow-sm p-4 mb-6 flex flex-wrap justify-between items-center gap-4">
+                <div className="text-gray-600">
+                  Showing {paginatedProducts.length} of {totalProducts} products
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-amber-700">
-                      ${product.price}
-                    </span>
-                    <Button size="sm">View Details</Button>
+                
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-600">Show</span>
+                    <Select
+                      value={itemsPerPage}
+                      onChange={handleItemsPerPageChange}
+                      options={[
+                        { value: 9, label: '9' },
+                        { value: 12, label: '12' },
+                        { value: 18, label: '18' },
+                        { value: 24, label: '24' },
+                      ]}
+                      className="w-20"
+                    />
                   </div>
+                  
+                  <ProductSort sortBy={sortBy} onSortChange={handleSortChange} />
                 </div>
-              </Card>
-            ))}
+              </div>
+
+              {/* Products Grid */}
+              <ProductGrid products={paginatedProducts} />
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              )}
+            </div>
           </div>
         </div>
       </main>
