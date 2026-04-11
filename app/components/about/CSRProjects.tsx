@@ -24,8 +24,6 @@ export default function CSRProjects() {
                   </div>
                 ))}
               </div>
-              
-              <Button variant="primary">Learn More About Our CSR</Button>
             </div>
             
             <div className="grid grid-cols-2 gap-4">
