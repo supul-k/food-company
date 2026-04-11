@@ -1,32 +1,36 @@
-// app/api/contact/route.ts
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { name, email, message } = await request.json();
+    const body = await request.json();
+    const { name, email, message } = body;
 
+    // Validate required fields
     if (!name || !email || !message) {
-      return NextResponse.json({ error: 'All fields required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'All fields are required' },
+        { status: 400 }
+      );
     }
 
-    await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
-      to: ['hello@sustenance.lanka'],
-      subject: `New message from ${name}`,
-      replyTo: email,
-      text: message,
-      html: `<p><strong>Name:</strong> ${name}</p>
-             <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Message:</strong></p>
-             <p>${message.replace(/\n/g, '<br/>')}</p>`,
-    });
+    // For now, just log the message to the server console
+    // In a real production app, you would send an email or save to a database
+    console.log('=== NEW CONTACT FORM SUBMISSION ===');
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Message:', message);
+    console.log('===================================');
 
-    return NextResponse.json({ success: true });
+    // Return success response without actually sending an email
+    return NextResponse.json(
+      { message: 'Message received! We will get back to you soon.' },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Failed to send' }, { status: 500 });
+    console.error('Contact form error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
