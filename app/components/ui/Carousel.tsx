@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
 interface Slide {
@@ -18,14 +18,14 @@ interface CarouselProps {
 export default function Carousel({ slides, autoPlay = true, interval = 5000 }: CarouselProps) {
   const [current, setCurrent] = useState(0);
 
-  const next = () => setCurrent((prev) => (prev + 1) % slides.length);
+  const next = useCallback(() => setCurrent((prev) => (prev + 1) % slides.length), [slides.length]);
   const prev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   useEffect(() => {
     if (!autoPlay) return;
     const timer = setInterval(next, interval);
     return () => clearInterval(timer);
-  }, [autoPlay, interval, current]);
+  }, [autoPlay, interval, next]);
 
   return (
     <div className="relative w-full h-[500px] overflow-hidden">
@@ -36,8 +36,8 @@ export default function Carousel({ slides, autoPlay = true, interval = 5000 }: C
             idx === current ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <div className="relative w-full h-full bg-gray-300">
-            {/* Replace with Next.js Image when you have real images */}
+          <div className="relative w-full h-full">
+            <Image src={slide.image} alt={slide.title} fill className="object-cover" priority={idx === 0} />
             <div className="absolute inset-0 bg-black/40 z-10" />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center z-20">
               <h1 className="text-5xl md:text-7xl font-bold mb-4">{slide.title}</h1>

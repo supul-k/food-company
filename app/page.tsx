@@ -8,7 +8,6 @@ import Benefits from './components/sections/Benefits';
 import Stats from './components/sections/Stats';
 import Testimonials from './components/sections/Testimonials';
 import NewsEvents from './components/sections/NewsEvents';
-import PopularProducts from './components/sections/PopularProducts';
 
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
         <WhoWeAre />
         <ProductCategories />
         <ProductGrid />
-        <PopularProducts />
         <Benefits />
         <Stats />
         <Testimonials />

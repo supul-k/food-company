@@ -1,29 +1,25 @@
-import { newsEvents } from '@/app/lib/data';
-import Button from '../ui/Button';
+import Link from 'next/link';
+import { newsArticles } from '@/app/lib/newsData';
 
 export default function NewsEvents() {
+  const latest = newsArticles.slice(0, 3);
+
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">News & Events</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {newsEvents.map((news) => (
-            <div key={news.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md">
-              <div className="bg-amber-100 h-32 flex items-center justify-center text-3xl">📰</div>
-              <div className="p-4">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                  <span className="font-bold text-brand-yellow">{news.date}</span> {news.month}
-                </div>
-                <h3 className="font-bold text-lg mb-2 line-clamp-2">{news.title}</h3>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-3">{news.excerpt}</p>
-                <p className="text-xs text-gray-400">By {news.author}</p>
-                <Button variant="outline" className="mt-3 w-full text-sm">Continue reading</Button>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">News & Events</h2>
+        <p className="text-gray-600 text-center mb-12">Stay up to date with our latest stories</p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {latest.map((article) => (
+            <Link key={article.id} href={`/news/${article.slug}`} className="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden group">
+              <div className="p-6">
+                <span className="text-xs font-semibold text-brand-yellow uppercase">{article.category}</span>
+                <h3 className="font-bold text-lg mt-2 mb-2 line-clamp-2 group-hover:text-brand-yellow transition">{article.title}</h3>
+                <p className="text-gray-600 text-sm line-clamp-3">{article.excerpt}</p>
+                <p className="text-xs text-gray-400 mt-4">{article.date} {article.month} {article.year} · {article.readTime} min read</p>
               </div>
-            </div>
+            </Link>
           ))}
-        </div>
-        <div className="text-center mt-12">
-          <Button variant="secondary">Follow Us on Facebook</Button>
         </div>
       </div>
     </section>

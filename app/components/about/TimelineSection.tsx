@@ -7,11 +7,12 @@ export default function TimelineSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
-            Chello Journey
+            Our Journey
           </h2>
+          <div className="w-20 h-1 bg-brand-yellow mx-auto mb-6"></div>
           <p className="text-center text-gray-600 max-w-3xl mx-auto mb-12">
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            From humble beginnings in 1995 to becoming a trusted dairy brand, Chello's journey reflects growth, innovation, and commitment to quality.
+            From a vision to preserve Sri Lanka's agricultural harvest to becoming an innovative force in natural food products, Sustenance Lanka's journey reflects dedication, innovation, and commitment to quality.
           </p>
           
           <div className="relative">
@@ -23,7 +24,7 @@ export default function TimelineSection() {
               {timelineEvents.map((event, idx) => (
                 <div key={idx} className={`relative flex flex-col md:flex-row ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
                   <div className="md:w-1/2 p-6">
-                    <div className={`bg-gradient-to-r ${idx % 2 === 0 ? 'from-amber-50 to-amber-100' : 'from-green-50 to-green-100'} p-6 rounded-xl shadow-md`}>
+                    <div className={`bg-gradient-to-r ${idx % 2 === 0 ? 'from-amber-50 to-amber-100' : 'from-green-50 to-green-100'} p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300`}>
                       <div className="text-4xl mb-3">{event.icon}</div>
                       <h3 className="text-2xl font-bold text-brand-yellow mb-2">{event.year}</h3>
                       <h4 className="text-xl font-semibold text-gray-800 mb-3">{event.title}</h4>

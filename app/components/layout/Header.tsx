@@ -1,12 +1,13 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import Button from '../ui/Button';
+import Image from 'next/image';
 
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/products', label: 'Products' },
   { href: '/about', label: 'About' },
+  { href: '/news', label: 'News' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -14,9 +15,9 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-brand-yellow">
-          Chello<span className="text-brand-green"> Dairy</span>
+      <div className="container mx-auto px-4 py-4 flex justify-around items-center">
+        <Link href="/" className="flex items-center gap-2 ml-10">
+          <Image src="/logo.png" alt="Chello Dairy" width={80} height={40} className="object-contain" priority />
         </Link>
         <nav className="hidden md:flex gap-8">
           {navLinks.map((link) => (
@@ -25,7 +26,6 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <Button variant="primary" className="hidden md:block">Order Now</Button>
         <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
           ☰
         </button>
@@ -37,7 +37,6 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Button variant="primary" fullWidth>Order Now</Button>
         </div>
       )}
     </header>

@@ -8,6 +8,7 @@ import OperationsSection from '../components/about/OperationsSection';
 import ChairmanMessage from '../components/about/ChairmanMessage';
 import TimelineSection from '../components/about/TimelineSection';
 import CSRProjects from '../components/about/CSRProjects';
+import TeamSection from '../components/about/TeamSection';
 
 export const metadata = {
   title: 'About Us | Chello Dairy - Our Story & Mission',
@@ -19,7 +20,7 @@ export default function AboutPage() {
     <>
       <Header />
       <main>
-        <div className="w-500 mx-auto">
+        {/* <div className="w-500 mx-auto"> */}
           <HeroSection />
           <VisionMission />
           <StorySection />
@@ -27,8 +28,9 @@ export default function AboutPage() {
           <OperationsSection />
           <ChairmanMessage />
           <TimelineSection />
+           <TeamSection />     
           <CSRProjects />
-        </div>
+        {/* </div> */}
       </main>
       <Footer />
     </>
