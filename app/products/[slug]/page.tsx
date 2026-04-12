@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ProductPageProps) {
   const { slug } = await params;  // ← Change: await params
   const product = getProductBySlug(slug);
-  
+
   if (!product) {
     return {
       title: 'Product Not Found',
@@ -75,38 +75,40 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <Header />
       <main className="min-h-screen py-8 bg-gray-50">
         <div className="container mx-auto px-4">
-          {/* Breadcrumbs */}
-          <div className="text-sm text-gray-500 mb-6">
-            <Link href="/" className="hover:text-brand-yellow">Home</Link>
-            {' > '}
-            <Link href="/products" className="hover:text-brand-yellow">Products</Link>
-            {' > '}
-            <Link href={`/products?category=${product.category}`} className="hover:text-brand-yellow">
-              {product.category}
-            </Link>
-            {' > '}
-            <span className="text-brand-yellow">{product.name}</span>
-          </div>
-
-          {/* Product Main Section */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Image Gallery */}
-              <ProductImageGallery
-                images={product.images || [product.image]}
-                productName={product.name}
-              />
-              
-              {/* Product Info */}
-              <ProductInfo product={product} />
+          <div className="max-w-6xl mx-auto">
+            {/* Breadcrumbs */}
+            <div className="text-sm text-gray-500 mb-6">
+              <Link href="/" className="hover:text-brand-yellow">Home</Link>
+              {' > '}
+              <Link href="/products" className="hover:text-brand-yellow">Products</Link>
+              {' > '}
+              <Link href={`/products?category=${product.category}`} className="hover:text-brand-yellow">
+                {product.category}
+              </Link>
+              {' > '}
+              <span className="text-brand-yellow">{product.name}</span>
             </div>
 
-            {/* Product Details Tabs */}
-            <ProductDetailsTab product={product} />
-          </div>
+            {/* Product Main Section */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* Image Gallery */}
+                <ProductImageGallery
+                  images={product.images || [product.image]}
+                  productName={product.name}
+                />
 
-          {/* Related Products */}
-          <RelatedProducts products={relatedProducts} />
+                {/* Product Info */}
+                <ProductInfo product={product} />
+              </div>
+
+              {/* Product Details Tabs */}
+              <ProductDetailsTab product={product} />
+            </div>
+
+            {/* Related Products */}
+            <RelatedProducts products={relatedProducts} />
+          </div>
         </div>
       </main>
       <Footer />

@@ -14,6 +14,7 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState('default');
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Add mobile sidebar state
 
   // Filter products by category
   const filteredProducts = useMemo(() => {
@@ -56,6 +57,7 @@ export default function ProductsPage() {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+    setIsSidebarOpen(false); // Close sidebar on mobile after selection
   };
 
   const handleSortChange = (value: string) => {
@@ -73,60 +75,73 @@ export default function ProductsPage() {
       <Header />
       <main className="min-h-screen py-8 bg-gray-50">
         <div className="container mx-auto px-4">
-          {/* Breadcrumb */}
-          <div className="text-sm text-gray-500 mb-6">
-            <span className="text-gray-700">Home</span> &gt; <span className="text-brand-yellow">Our Product Line</span>
-          </div>
-
-          <div className="grid lg:grid-cols-4 gap-8">
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <CategorySidebar
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onSelectCategory={handleCategoryChange}
-              />
+          <div className="max-w-6xl mx-auto">
+            {/* Breadcrumb */}
+            <div className="text-sm text-gray-500 mb-6">
+              <span className="text-gray-700">Home</span> &gt; <span className="text-brand-yellow">Our Product Line</span>
             </div>
 
-            {/* Main Content */}
-            <div className="lg:col-span-3">
-              {/* Controls Bar */}
-              <div className="bg-white rounded-lg shadow-sm p-4 mb-6 flex flex-wrap justify-between items-center gap-4">
-                <div className="text-gray-600">
-                  Showing {paginatedProducts.length} of {totalProducts} products
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600">Show</span>
-                    <Select
-                      value={itemsPerPage}
-                      onChange={handleItemsPerPageChange}
-                      options={[
-                        { value: 9, label: '9' },
-                        { value: 12, label: '12' },
-                        { value: 18, label: '18' },
-                        { value: 24, label: '24' },
-                      ]}
-                      className="w-20"
-                    />
-                  </div>
-                  
-                  <ProductSort sortBy={sortBy} onSortChange={handleSortChange} />
-                </div>
+            {/* Mobile Filter Button */}
+            <div className="lg:hidden mb-4">
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="w-full bg-brand-yellow text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2"
+              >
+                <span>🔍</span>
+                {isSidebarOpen ? 'Hide Categories' : 'Show Categories'}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Sidebar - hidden on mobile unless opened */}
+              <div className={`lg:col-span-1 ${isSidebarOpen ? 'block' : 'hidden lg:block'}`}>
+                <CategorySidebar
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={handleCategoryChange}
+                />
               </div>
 
-              {/* Products Grid */}
-              <ProductGrid products={paginatedProducts} />
+              {/* Main Content - full width on mobile */}
+              <div className="lg:col-span-3">
+                {/* Controls Bar - make responsive */}
+                <div className="bg-white rounded-lg shadow-sm p-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div className="text-gray-600 text-sm">
+                    Showing {paginatedProducts.length} of {totalProducts} products
+                  </div>
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
-              )}
+                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Show</span>
+                      <Select
+                        value={itemsPerPage}
+                        onChange={handleItemsPerPageChange}
+                        options={[
+                          { value: 9, label: '9' },
+                          { value: 12, label: '12' },
+                          { value: 18, label: '18' },
+                          { value: 24, label: '24' },
+                        ]}
+                        className="w-20"
+                      />
+                    </div>
+
+                    <ProductSort sortBy={sortBy} onSortChange={handleSortChange} />
+                  </div>
+                </div>
+
+                {/* Products Grid */}
+                <ProductGrid products={paginatedProducts} />
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Button from '../ui/Button';
 
 interface PaginationProps {
@@ -8,25 +9,41 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const maxVisible = 5;
-  
-  let visiblePages = pages;
-  if (totalPages > maxVisible) {
-    const start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const getVisiblePages = () => {
+    const maxVisible = isMobile ? 3 : 5;
+    
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
     const end = Math.min(totalPages, start + maxVisible - 1);
-    visiblePages = pages.slice(start - 1, end);
-  }
+    
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  };
+
+  const visiblePages = getVisiblePages();
 
   return (
-    <div className="flex justify-center items-center gap-2 mt-8">
+    <div className="flex justify-center items-center gap-1 sm:gap-2 mt-8 flex-wrap">
       <Button
         variant="outline"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-1"
+        className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
       >
-        Previous
+        Prev
       </Button>
       
       {visiblePages[0] > 1 && (
@@ -34,11 +51,11 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           <Button
             variant="outline"
             onClick={() => onPageChange(1)}
-            className="px-3 py-1"
+            className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
           >
             1
           </Button>
-          {visiblePages[0] > 2 && <span className="px-2">...</span>}
+          {visiblePages[0] > 2 && <span className="px-1 text-gray-500 text-xs sm:text-sm">...</span>}
         </>
       )}
       
@@ -47,7 +64,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           key={page}
           variant={currentPage === page ? 'primary' : 'outline'}
           onClick={() => onPageChange(page)}
-          className="px-3 py-1"
+          className="px-2 sm:px-3 py-1 text-xs sm:text-sm min-w-[32px] sm:min-w-[40px]"
         >
           {page}
         </Button>
@@ -55,11 +72,11 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       
       {visiblePages[visiblePages.length - 1] < totalPages && (
         <>
-          {visiblePages[visiblePages.length - 1] < totalPages - 1 && <span className="px-2">...</span>}
+          {visiblePages[visiblePages.length - 1] < totalPages - 1 && <span className="px-1 text-gray-500 text-xs sm:text-sm">...</span>}
           <Button
             variant="outline"
             onClick={() => onPageChange(totalPages)}
-            className="px-3 py-1"
+            className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
           >
             {totalPages}
           </Button>
@@ -70,7 +87,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         variant="outline"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1"
+        className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
       >
         Next
       </Button>
