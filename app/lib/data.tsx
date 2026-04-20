@@ -34,6 +34,69 @@ export const productCategories = [
   { name: 'Pepo', slug: 'pepo', count: 6, icon: '/categories/porrige.png' },
 ];
 
+// Category metadata for banners (updated to match your categories)
+export const categoryMetadata: Record<string, {
+  bannerImage: string | null;
+  coverImage: string | null;
+  description: string;
+  bgGradient: string;
+  icon?: string;
+}> = {
+  'Instant Porridge': {
+    bannerImage: '/products/category-banners/instant-porridge.png',
+    coverImage: '/products/category-banners/instant-porridge.png',
+    description: 'Nutritious and convenient instant porridges made from traditional grains, perfect for a healthy breakfast.',
+    bgGradient: 'from-amber-200 to-orange-300',
+    icon: '/categories/porrige.png',
+  },
+  'Herbals Tea Bag': {
+    bannerImage: '/products/category-banners/herbal-tea.png',
+    coverImage: '/products/category-banners/herbal-tea.png',
+    description: 'Wellness-focused herbal tea blends crafted from natural herbs, flowers, and roots for health and relaxation.',
+    bgGradient: 'from-green-600 to-emerald-600',
+    icon: '/categories/tea-bag.png',
+  },
+  'Roots & Yums': {
+    bannerImage: '/products/category-banners/roots-yums.png',
+    coverImage: '/products/category-banners/roots-yums.png',
+    description: 'Delicious and nutritious snacks made from natural roots and tubers, harvested from fertile lands.',
+    bgGradient: 'from-amber-600 to-brown-600',
+    icon: '/categories/roots.png',
+  },
+  'Fruits Powder & Chips': {
+    bannerImage: '/products/category-banners/fruit-powder.png',
+    coverImage: '/products/category-banners/fruit-powder.png',
+    description: 'Natural fruit powders and crispy chips made from real fruits, preserving authentic flavors and nutrients.',
+    bgGradient: 'from-red-500 to-pink-500',
+    icon: '/categories/chips.png'
+  },
+  'Instant Curry': {
+    bannerImage: '/products/category-banners/instant-curry.png',
+    coverImage: '/products/category-banners/instant-curry.png',
+    description: 'Quick and easy instant curry mixes packed with authentic Sri Lankan spices and flavors.',
+    bgGradient: 'from-red-600 to-orange-600',
+    icon: '/categories/curry.png'
+  },
+  'Pepo': {
+    bannerImage: '/products/category-banners/pepo.png',
+    coverImage: '/products/category-banners/pepo.png',
+    description: 'Innovative value-added pumpkin products, from soup mixes to healthy snacks, made from surplus harvest.',
+    bgGradient: 'from-orange-500 to-yellow-600',
+    icon: '/categories/porrige.png',
+  },
+};
+
+// Helper function to get category metadata
+export function getCategoryMetadata(categoryName: string) {
+  return categoryMetadata[categoryName] || {
+    bannerImage: null,
+    coverImage: null,
+    description: `Explore our ${categoryName} collection of natural and nutritious products.`,
+    bgGradient: 'from-brand-yellow to-brand-green',
+    icon: '📦',
+  };
+}
+
 // ============================================
 // BENEFITS (adapted to Sustenance Lanka)
 // ============================================

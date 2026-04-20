@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 interface ProductImageGalleryProps {
@@ -9,17 +9,37 @@ interface ProductImageGalleryProps {
 
 export default function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
   const [selectedImage, setSelectedImage] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  // Preload all images on mount
+  useEffect(() => {
+    images.forEach((image) => {
+      const img = document.createElement('img');
+      img.src = image;
+      img.onload = () => {
+        setLoadedImages(prev => new Set(prev).add(image));
+      };
+    });
+  }, [images]);
+
+  const isImageLoaded = loadedImages.has(images[selectedImage]);
 
   return (
     <div className="space-y-4">
-      {/* Main Image */}
-      <div className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl h-96 relative overflow-hidden">
-        {images[selectedImage] ? (
-          <Image src={images[selectedImage]} alt={productName} fill className="object-contain" priority />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-8xl">🛒</div>
-        )}
-      </div>
+  {/* Main Image Container - Fixed height with flex centering */}
+  <div className="rounded-2xl h-96 flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-full flex items-center justify-center">
+      <Image 
+        src={images[selectedImage]} 
+        alt={productName} 
+        height={300}
+        width={400}
+        className="object-contain max-w-full max-h-full"
+        sizes="(max-width: 768px) 100vw, 50vw"
+        priority
+      />
+    </div>
+  </div>
 
       {/* Thumbnail Gallery */}
       {images.length > 1 && (
@@ -28,15 +48,17 @@ export default function ProductImageGallery({ images, productName }: ProductImag
             <button
               key={idx}
               onClick={() => setSelectedImage(idx)}
-              className={`relative h-24 rounded-lg overflow-hidden transition ${
+              className={`relative aspect-square rounded-lg overflow-hidden transition ${
                 selectedImage === idx ? 'ring-2 ring-brand-yellow ring-offset-2' : 'hover:opacity-80'
               }`}
             >
-              {image ? (
-                <Image src={image} alt={`${productName} ${idx + 1}`} fill className="object-cover" />
-              ) : (
-                <div className="w-full h-full bg-gray-100 flex items-center justify-center text-2xl">🛒</div>
-              )}
+              <Image 
+                src={image} 
+                alt={`${productName} ${idx + 1}`} 
+                fill 
+                className="object-cover"
+                sizes="(max-width: 768px) 80px, 100px"
+              />
             </button>
           ))}
         </div>

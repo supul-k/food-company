@@ -6,15 +6,18 @@ import CategorySidebar from '../components/products/CategorySidebar';
 import ProductGrid from '../components/products/ProductGrid';
 import ProductSort from '../components/products/ProductSort';
 import Pagination from '../components/products/Pagination';
+import CategoryBanner from '../components/products/CategoryBanner';
 import Select from '../components/ui/Select';
 import { products, categories } from '../lib/productsData';
+import { getCategoryMetadata } from '../lib/data';
+import Link from 'next/link';
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('default');
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Add mobile sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Filter products by category
   const filteredProducts = useMemo(() => {
@@ -24,6 +27,10 @@ export default function ProductsPage() {
     }
     return filtered;
   }, [selectedCategory]);
+
+  // Get category metadata for banner
+  const categoryMetadata = selectedCategory ? getCategoryMetadata(selectedCategory) : null;
+  const categoryProductCount = filteredProducts.length;
 
   // Sort products
   const sortedProducts = useMemo(() => {
@@ -57,7 +64,7 @@ export default function ProductsPage() {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setCurrentPage(1);
-    setIsSidebarOpen(false); // Close sidebar on mobile after selection
+    setIsSidebarOpen(false);
   };
 
   const handleSortChange = (value: string) => {
@@ -70,6 +77,12 @@ export default function ProductsPage() {
     setCurrentPage(1);
   };
 
+  // Clear category filter
+  const handleClearCategory = () => {
+    setSelectedCategory('');
+    setCurrentPage(1);
+  };
+
   return (
     <>
       <Header />
@@ -78,8 +91,29 @@ export default function ProductsPage() {
           <div className="max-w-6xl mx-auto">
             {/* Breadcrumb */}
             <div className="text-sm text-gray-500 mb-6">
-              <span className="text-gray-700">Home</span> &gt; <span className="text-brand-yellow">Our Product Line</span>
+              <span className="text-gray-700">Home</span> &gt; 
+              {selectedCategory ? (
+                <>
+                  <Link href="/products" className="hover:text-brand-yellow ml-1">Products</Link>
+                  <span className="mx-1"> &gt; </span>
+                  <span className="text-brand-yellow">{selectedCategory}</span>
+                </>
+              ) : (
+                <span className="text-brand-yellow ml-1"> Our Product Line</span>
+              )}
             </div>
+
+            {/* Category Banner - Only show when category is selected */}
+            {selectedCategory && categoryMetadata && (
+              <CategoryBanner
+                categoryName={selectedCategory}
+                categoryDescription={categoryMetadata.description}
+                productCount={categoryProductCount}
+                bgGradient={categoryMetadata.bgGradient}
+                bannerImage={categoryMetadata.bannerImage}
+                icon={categoryMetadata.icon} 
+              />
+            )}
 
             {/* Mobile Filter Button */}
             <div className="lg:hidden mb-4">
@@ -93,18 +127,19 @@ export default function ProductsPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Sidebar - hidden on mobile unless opened */}
+              {/* Sidebar */}
               <div className={`lg:col-span-1 ${isSidebarOpen ? 'block' : 'hidden lg:block'}`}>
                 <CategorySidebar
                   categories={categories}
                   selectedCategory={selectedCategory}
                   onSelectCategory={handleCategoryChange}
+                  onClearCategory={handleClearCategory}
                 />
               </div>
 
-              {/* Main Content - full width on mobile */}
+              {/* Main Content */}
               <div className="lg:col-span-3">
-                {/* Controls Bar - make responsive */}
+                {/* Controls Bar */}
                 <div className="bg-white rounded-lg shadow-sm p-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="text-gray-600 text-sm">
                     Showing {paginatedProducts.length} of {totalProducts} products
