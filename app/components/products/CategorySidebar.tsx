@@ -6,16 +6,30 @@ interface CategorySidebarProps {
   categories: { name: string; slug: string; count: number; icon: string }[];
   selectedCategory: string;
   onSelectCategory: (category: string) => void;
+  onClearCategory?: () => void;
 }
 
 export default function CategorySidebar({
   categories,
   selectedCategory,
   onSelectCategory,
+  onClearCategory,
 }: CategorySidebarProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 sticky top-24">
       <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-800">Our Product Line</h3>
+      
+      {/* Clear/Reset button when category is selected */}
+      {selectedCategory && onClearCategory && (
+        <button
+          onClick={onClearCategory}
+          className="w-full mb-3 px-3 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition flex items-center justify-center gap-2"
+        >
+          <span>✕</span>
+          Clear Selection
+        </button>
+      )}
+      
       <div className="space-y-1 sm:space-y-2">
         <button
           onClick={() => onSelectCategory('')}
