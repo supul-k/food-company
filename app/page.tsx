@@ -12,6 +12,28 @@ import NewsEvents from './components/sections/NewsEvents';
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Corporation",
+            "name": "Sustenance Lanka (Pvt) Ltd",
+            "url": "https://www.sustenancelanka.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Industrial Zone I",
+              "addressLocality": "Buttala",
+              "addressCountry": "LK"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "[Your phone number]",
+              "contactType": "customer service"
+            }
+          })
+        }}
+      />
       <Header />
       <main>
         <HeroCarousel />
