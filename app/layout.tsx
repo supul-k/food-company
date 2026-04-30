@@ -5,8 +5,30 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Chello Dairy - Premium Dairy Products Since 1995',
-  description: 'Trusted dairy brand in Sri Lanka. Fresh milk, yoghurt, set kiri, and more.',
+  title: 'Sustenance Lanka (Pvt) Ltd | Official Website',
+  description: 'Official website of Sustenance Lanka (Pvt) Ltd - food company specializing in natural, nutritious products inspired by Sri Lankan heritage.',
+  keywords: 'Sustenance Lanka, Sustenance Lanka Pvt Ltd, sustenance lanka company',
+  authors: [{ name: 'Sustenance Lanka' }],
+  openGraph: {
+    title: 'Sustenance Lanka (Pvt) Ltd',
+    description: 'Official website of Sustenance Lanka (Pvt) Ltd - food company specializing in natural, nutritious products inspired by Sri Lankan heritage.',
+    url: 'https://www.sustenancelanka.com/',
+    siteName: 'Sustenance Lanka',
+    type: 'website',
+    locale: 'en_US',
+  },
+  publisher: 'Sustenance Lanka (Pvt) Ltd',
+  alternates: {
+    canonical: 'https://www.sustenancelanka.com/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({
