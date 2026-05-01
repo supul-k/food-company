@@ -41,7 +41,7 @@ export default function WhoWeAre() {
           {/* Image Column */}
           <div className="bg-amber-100 h-96 rounded-2xl flex items-center justify-center text-6xl overflow-hidden">
             <Image
-              src="/hero/who-we-are.png"
+              src="/hero/who-we.png"
               alt="Sustenance Lanka - Agricultural Preservation and Innovation"
               width={1000}
               height={700}

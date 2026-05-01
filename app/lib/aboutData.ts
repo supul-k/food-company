@@ -1,10 +1,10 @@
 export const stats = [
-  { value: '2016', label: 'FOUNDING YEAR', icon: '🏭' },
-  { value: '132', label: 'PRODUCTS DEVELOPED', icon: '📦' },
-  { value: '8', label: 'PRODUCT CATEGORIES', icon: '🏷️' },
-  { value: '300+', label: 'FARMER PARTNERS', icon: '👨‍🌾' },
-  { value: '25+', label: 'TEAM MEMBERS', icon: '💼' },
-  { value: '4', label: 'BRAND LINES', icon: '🌟' },
+  { value: '2015', label: 'FOUNDING YEAR', icon: '' },
+  { value: '132', label: 'PRODUCTS DEVELOPED', icon: '' },
+  { value: '8', label: 'PRODUCT CATEGORIES', icon: '' },
+  { value: '300+', label: 'FARMER PARTNERS', icon: '' },
+  { value: '25+', label: 'TEAM MEMBERS', icon: '' },
+  { value: '4', label: 'BRAND LINES', icon: '' },
 ];
 
 export const operations = [
