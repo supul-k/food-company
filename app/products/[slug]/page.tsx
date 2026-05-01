@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: ProductPageProps) {
   }
 
   return {
-    title: `${product.name} | Chello Dairy Products`,
+    title: `${product.name} | Sustenance Lanka Products`,
     description: product.description,
-    keywords: `${product.name}, ${product.category}, Chello Dairy, dairy products, Sri Lanka`,
+    keywords: `${product.name}, ${product.category}, Sustenance Lanka, dairy products, Sri Lanka`,
   };
 }
 
@@ -65,7 +65,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     },
     brand: {
       '@type': 'Brand',
-      name: 'Chello Dairy',
+      name: 'Sustenance Lanka',
     },
     category: product.category,
   };
@@ -80,9 +80,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="text-sm text-gray-500 mb-6">
               <Link href="/" className="hover:text-brand-yellow">Home</Link>
               {' > '}
+              {/* <Link href="/products" className="hover:text-brand-yellow">Products</Link> */}
               <Link href="/products" className="hover:text-brand-yellow">Products</Link>
               {' > '}
-              <Link href={`/products?category=${product.category}`} className="hover:text-brand-yellow">
+              {/* <Link href={`/products?category=${product.category}`} className="hover:text-brand-yellow">
+                {product.category}
+              </Link> */}
+              <Link href={`/products?category=${encodeURIComponent(product.category)}`} className="hover:text-brand-yellow">
                 {product.category}
               </Link>
               {' > '}

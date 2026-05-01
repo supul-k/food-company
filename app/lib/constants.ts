@@ -59,9 +59,9 @@ export const PRODUCTS: Product[] = [
 export const COMPANY_INFO = {
   name: 'Italian Delights',
   founded: 1985,
-  email: 'hello@italiandelights.com',
-  phone: '+1 (555) 123-4567',
-  address: '123 Food Street, New York, NY 10001',
+  email: 'info@sustenance.lk',
+  phone: '+94453141999',
+  address: 'Head Office: Warnagala RD, Guruluwana, Ratnapura, Sri Lanka',
   social: {
     instagram: 'https://instagram.com/italiandelights',
     facebook: 'https://facebook.com/italiandelights',

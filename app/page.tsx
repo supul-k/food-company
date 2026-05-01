@@ -17,9 +17,12 @@ export default function Home() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Corporation",
+            "@type": "Organization",
             "name": "Sustenance Lanka (Pvt) Ltd",
             "url": "https://www.sustenancelanka.com",
+            "logo": "https://www.sustenancelanka.com/android-chrome-512x512.png",
+            "image": "https://www.sustenancelanka.com/android-chrome-512x512.png",
+            "description": "Leading provider of quality products in Sri Lanka",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Industrial Zone I",
@@ -28,9 +31,14 @@ export default function Home() {
             },
             "contactPoint": {
               "@type": "ContactPoint",
-              "telephone": "[Your phone number]",
-              "contactType": "customer service"
-            }
+              "telephone": "+94 [Your phone number]",
+              "contactType": "customer service",
+              "availableLanguage": ["English", "Sinhala"]
+            },
+            "sameAs": [
+              "https://www.facebook.com/sustenancelanka",
+              "https://www.linkedin.com/company/sustenancelanka"
+            ]
           })
         }}
       />
