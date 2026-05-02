@@ -5,11 +5,11 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sustenancelanka.com'),
   title: 'Sustenance Lanka (Pvt) Ltd | Official Website',
   description: 'Official website of Sustenance Lanka (Pvt) Ltd - food company specializing in natural, nutritious products inspired by Sri Lankan heritage.',
   keywords: 'Sustenance Lanka, Sustenance Lanka Pvt Ltd, sustenance lanka company',
   authors: [{ name: 'Sustenance Lanka' }],
-  
   // ADD THIS ICONS SECTION
   icons: {
     icon: [
@@ -31,39 +31,39 @@ export const metadata: Metadata = {
       },
     ],
   },
-  
+
   // ADD MANIFEST
   manifest: '/site.webmanifest',
-  
+
   // IMPROVE OPEN GRAPH WITH IMAGES
   openGraph: {
     title: 'Sustenance Lanka (Pvt) Ltd',
     description: 'Official website of Sustenance Lanka (Pvt) Ltd - food company specializing in natural, nutritious products inspired by Sri Lankan heritage.',
-    url: 'https://www.sustenancelanka.com/',
+    url: 'https://sustenancelanka.com',
     siteName: 'Sustenance Lanka',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: 'https://www.sustenancelanka.com/og-image.jpg', // Create this image
+        url: 'https://sustenancelanka.com/og-image.jpg', // Create this image
         width: 1200,
         height: 630,
         alt: 'Sustenance Lanka Logo',
       },
     ],
   },
-  
+
   // ADD TWITTER CARDS
   twitter: {
     card: 'summary_large_image',
     title: 'Sustenance Lanka (Pvt) Ltd',
     description: 'Official website of Sustenance Lanka (Pvt) Ltd - food company specializing in natural, nutritious products inspired by Sri Lankan heritage.',
-    images: ['https://www.sustenancelanka.com/twitter-image.jpg'], // Create this image
+    images: ['https://sustenancelanka.com/twitter-image.jpg'], // Create this image
   },
-  
+
   publisher: 'Sustenance Lanka (Pvt) Ltd',
   alternates: {
-    canonical: 'https://www.sustenancelanka.com/',
+    canonical: '/',
   },
   robots: {
     index: true,

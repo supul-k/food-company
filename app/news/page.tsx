@@ -3,12 +3,14 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import NewsCard from '../components/news/NewsCard';
 import { newsArticles } from '../lib/newsData';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'News & Events | Sustenance Lanka',
-  description: 'Stay updated with our latest news, events, and insights about traditional foods, wellness, and community impact.',
+  alternates: {
+    canonical: '/news',
+  },
 };
-
 export default function NewsPage() {
   const featuredArticle = newsArticles[0];
   const recentArticles = newsArticles.slice(1);
