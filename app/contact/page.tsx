@@ -5,14 +5,6 @@ import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
 import Button from '@/app/components/ui/Button';
 import { COMPANY_INFO } from '@/app/lib/constants';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Contact Us | Sustenance Lanka',
-  alternates: {
-    canonical: '/contact',
-  },
-};
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

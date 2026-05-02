@@ -11,14 +11,6 @@ import Select from '../components/ui/Select';
 import { products, categories } from '../lib/productsData';
 import { getCategoryMetadata } from '../lib/data';
 import Link from 'next/link';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Products | Sustenance Lanka',
-  alternates: {
-    canonical: '/products',
-  },
-};
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
