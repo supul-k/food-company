@@ -73,6 +73,12 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+  verification: {
+    google: 'EPI_nEkRWfh8D5FvyzMCnpSsQ88ux_g7NGEhF7A-jQU',
+    other: {
+      'msvalidate.01': '706092A108DDD250777B178A1828FA45',
+    },
+  },
 };
 
 export default function RootLayout({
