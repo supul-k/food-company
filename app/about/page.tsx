@@ -8,10 +8,13 @@ import OperationsSection from '../components/about/OperationsSection';
 import ChairmanMessage from '../components/about/ChairmanMessage';
 import TimelineSection from '../components/about/TimelineSection';
 import CSRProjects from '../components/about/CSRProjects';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'About Us | Sustenance Lanka - Our Story & Mission',
-  description: 'Learn about Sustenance Lanka\'s journey since 1995, our vision, mission, and commitment to quality dairy products in Sri Lanka.',
+export const metadata: Metadata = {
+  title: 'About Us | Sustenance Lanka',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {

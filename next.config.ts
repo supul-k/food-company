@@ -4,16 +4,27 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'sustenancelanka.com',  // Your specific domain
+        hostname: 'sustenancelanka.com',
         port: '',
         pathname: '/**',
       },
-      // Add other domains you use, for example:
-      // {
-      //   protocol: 'https',
-      //   hostname: 'images.unsplash.com',
-      // },
     ],
+  },
+
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'food-company-seven.vercel.app',
+          },
+        ],
+        destination: 'https://sustenancelanka.com/:path*',
+        permanent: true,
+      },
+    ];
   },
 };
 
